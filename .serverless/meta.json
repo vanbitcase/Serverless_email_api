@@ -1,0 +1,348 @@
+{
+  "C:\\Users\\DEV\\Desktop\\projects\\Intern_banao": {
+    "versionSfCore": null,
+    "versionFramework": "4.1.3",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {},
+    "composeServiceName": null,
+    "servicePath": "C:\\Users\\DEV\\Desktop\\projects\\Intern_banao",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "vanbitcase",
+      "app": "emailapi",
+      "service": "intern-banao-service",
+      "provider": {
+        "name": "aws",
+        "runtime": "python3.8",
+        "region": "us-east-1",
+        "stage": "dev",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "ServerlessDeploymentBucket": {
+              "Type": "AWS::S3::Bucket",
+              "Properties": {
+                "BucketEncryption": {
+                  "ServerSideEncryptionConfiguration": [
+                    {
+                      "ServerSideEncryptionByDefault": {
+                        "SSEAlgorithm": "AES256"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "ServerlessDeploymentBucketPolicy": {
+              "Type": "AWS::S3::BucketPolicy",
+              "Properties": {
+                "Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "PolicyDocument": {
+                  "Statement": [
+                    {
+                      "Action": "s3:*",
+                      "Effect": "Deny",
+                      "Principal": "*",
+                      "Resource": [
+                        {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":s3:::",
+                              {
+                                "Ref": "ServerlessDeploymentBucket"
+                              },
+                              "/*"
+                            ]
+                          ]
+                        },
+                        {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":s3:::",
+                              {
+                                "Ref": "ServerlessDeploymentBucket"
+                              }
+                            ]
+                          ]
+                        }
+                      ],
+                      "Condition": {
+                        "Bool": {
+                          "aws:SecureTransport": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "AppLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/intern-banao-service-dev-app"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "intern-banao-service",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/intern-banao-service-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/intern-banao-service-dev*:*:*"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "intern-banao-service",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": {
+                "Ref": "ServerlessDeploymentBucket"
+              }
+            }
+          }
+        },
+        "coreCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "ServerlessDeploymentBucket": {
+              "Type": "AWS::S3::Bucket",
+              "Properties": {
+                "BucketEncryption": {
+                  "ServerSideEncryptionConfiguration": [
+                    {
+                      "ServerSideEncryptionByDefault": {
+                        "SSEAlgorithm": "AES256"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "ServerlessDeploymentBucketPolicy": {
+              "Type": "AWS::S3::BucketPolicy",
+              "Properties": {
+                "Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "PolicyDocument": {
+                  "Statement": [
+                    {
+                      "Action": "s3:*",
+                      "Effect": "Deny",
+                      "Principal": "*",
+                      "Resource": [
+                        {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":s3:::",
+                              {
+                                "Ref": "ServerlessDeploymentBucket"
+                              },
+                              "/*"
+                            ]
+                          ]
+                        },
+                        {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":s3:::",
+                              {
+                                "Ref": "ServerlessDeploymentBucket"
+                              }
+                            ]
+                          ]
+                        }
+                      ],
+                      "Condition": {
+                        "Bool": {
+                          "aws:SecureTransport": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": {
+                "Ref": "ServerlessDeploymentBucket"
+              }
+            }
+          }
+        }
+      },
+      "functions": {
+        "app": {
+          "handler": "wsgi_handler.handler",
+          "events": [
+            {
+              "http": {
+                "path": "apidata",
+                "method": "any"
+              }
+            }
+          ],
+          "name": "intern-banao-service-dev-app"
+        }
+      },
+      "plugins": [
+        "serverless-wsgi",
+        "serverless-offline"
+      ],
+      "custom": {
+        "wsgi": {
+          "app": "handler.app",
+          "packRequirements": true
+        },
+        "serverless-offline": {
+          "port": 3000,
+          "host": "0.0.0.0"
+        }
+      }
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\r\norg: vanbitcase\r\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\r\napp: emailapi\r\nservice: intern-banao-service\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: python3.8\r\n  region: us-east-1\r\n\r\nfunctions:\r\n  app:\r\n    handler: wsgi_handler.handler\r\n    events:\r\n      - http:\r\n          path: apidata\r\n          method: any\r\n\r\nplugins:\r\n  - serverless-wsgi\r\n  - serverless-offline\r\n\r\ncustom:\r\n  wsgi:\r\n    app: handler.app\r\n    packRequirements: True\r\n  serverless-offline:\r\n    port: 3000\r\n    host: 0.0.0.0\r\n\r\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {},
+    "error": "Traceback (most recent call last):\r\n  File \"C:\\Users\\DEV\\Desktop\\projects\\Intern_banao\\node_modules\\serverless-wsgi\\requirements.py\", line 133, in <module>\r\n    package(args[:-1], args[-1], pip_args)\r\n  File \"C:\\Users\\DEV\\Desktop\\projects\\Intern_banao\\node_modules\\serverless-wsgi\\requirements.py\", line 35, in package\r\n    shutil.rmtree(target_dir)\r\n  File \"C:\\Python312\\Lib\\shutil.py\", line 820, in rmtree\r\n    return _rmtree_unsafe(path, onexc)\r\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Python312\\Lib\\shutil.py\", line 643, in _rmtree_unsafe\r\n    _rmtree_unsafe(fullname, onexc)\r\n  File \"C:\\Python312\\Lib\\shutil.py\", line 652, in _rmtree_unsafe\r\n    onexc(os.rmdir, path, err)\r\n  File \"C:\\Python312\\Lib\\shutil.py\", line 650, in _rmtree_unsafe\r\n    os.rmdir(path)\r\nPermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\\\Users\\\\DEV\\\\Desktop\\\\projects\\\\Intern_banao\\\\.requirements\\\\.venv'\r\n",
+    "params": {},
+    "machineId": "0d2fcc88686456f30b2e2d5f1ea611a2",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "594df034-de34-4bcb-aba4-b5085bb80103",
+    "orgName": "vanbitcase",
+    "userId": "M2gs6LLFMJdysxMCZr",
+    "dashboard": {
+      "isEnabledForService": true,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": {
+        "providers": true,
+        "monitoring": true
+      },
+      "orgObservabilityIntegrations": [
+        {
+          "integrationId": "qSbsHm1qdhqzsGjXEyug3h",
+          "awsAccountId": "533267048802",
+          "status": "alive"
+        }
+      ],
+      "serviceAppId": "wHVWYfhFBJkKkSbfkw",
+      "serviceProvider": {
+        "accessKeyId": "<REDACTED>",
+        "secretAccessKey": "<REDACTED>",
+        "sessionToken": "<REDACTED>"
+      },
+      "instanceParameters": null
+    },
+    "userName": "vanbitcase",
+    "subscription": null,
+    "userEmail": "vanshrastogi212@gmail.com",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "533267048802",
+    "versionSf": "4.1.3",
+    "serviceProviderAwsCfStackName": "intern-banao-service-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:533267048802:stack/intern-banao-service-dev/e7f51c20-2a52-11ef-b426-0e9a794ece11",
+    "serviceProviderAwsCfStackCreated": "2024-06-14T13:35:04.083Z",
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": "CREATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}
